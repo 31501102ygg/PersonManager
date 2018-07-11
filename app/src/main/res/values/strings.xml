@@ -1,0 +1,42 @@
+<resources>
+    <string name="app_name">PersonManager</string>
+    <string name="title_activity_login">Sign in</string>
+
+    <!-- Strings related to login -->
+    <string name="headerImg">头像</string>
+    <string name="prompt_user">用户名</string>
+    <string name="prompt_password">密码</string>
+    <string name="action_sign_in">登录</string>
+    <string name="prompt">还没有账户？创建一个吧</string>
+    <string name="action_sign_in_short">登录</string>
+    <string name="error_invalid_email">邮箱已经存在</string>
+    <string name="error_invalid_password">密码太短</string>
+    <string name="error_incorrect_password">密码错误</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="login_success">登录成功</string>
+    <string name="register">注册</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
+    <string name="title_activity_main2">Main2Activity</string>
+    <string name="title_section1">Section 1</string>
+    <string name="title_section2">Section 2</string>
+    <string name="title_section3">Section 3</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_example">Example action</string>
+
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+
+    <string name="title_money">收支</string>
+    <string name="title_investment">投资</string>
+    <string name="title_schedule">日程</string>
+    <string name="title_account">账号</string>
+
+</resources>
