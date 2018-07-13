@@ -83,6 +83,7 @@ public class LoginActivity_1 extends AppCompatActivity{
         final String[] password1 = new String[1];
         if (userid.isEmpty()||password.isEmpty()){
             Log.i("login","用户名或密码不能为空");
+            progressDialog.dismiss();
             Toast.makeText(getApplicationContext(),"用户名或密码不能为空",Toast.LENGTH_SHORT).show();
             return;
         }

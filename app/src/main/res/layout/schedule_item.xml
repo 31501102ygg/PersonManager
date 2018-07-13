@@ -10,34 +10,34 @@
         android:layout_height="72dp">
 
         <ImageView
-            android:id="@+id/item_img"
+            android:id="@+id/schedule_item_img"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_margin="16dp"
-            android:background="#ffffff"/>
+            android:src="@drawable/icons8_circle_48"/>
 
         <TextView
-            android:id="@+id/item_title"
+            android:id="@+id/schedule_item_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/item_img"
-            android:layout_toRightOf="@+id/item_img"
+            android:layout_alignTop="@+id/schedule_item_img"
+            android:layout_toRightOf="@+id/schedule_item_img"
             android:text="行车交通"
             android:textColor="@color/black"
             android:textSize="16dp" />
 
         <TextView
-            android:id="@+id/item_date"
+            android:id="@+id/schedule_item_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/item_img"
-            android:layout_toRightOf="@+id/item_img"
+            android:layout_alignBottom="@+id/schedule_item_img"
+            android:layout_toRightOf="@+id/schedule_item_img"
             android:text="2017-07-07"
             android:textColor="@color/black"
             android:textSize="12dp" />
 
         <TextView
-            android:id="@+id/item_money"
+            android:id="@+id/schedule_item_money"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"

@@ -11,8 +11,18 @@
     <color name="light_red">#FFAFAF</color>
     <color name="light_yellow">#FFECC0</color>
 
-    <color name="dark_blue">#0099CC</color>
+    <color name="dark_blue">#0099cc</color>
     <color name="dark_green">#669900</color>
     <color name="dark_red">#CC0000</color>
     <color name="dark_yellow">#FF8A00</color>
+
+    <color name="background_transparent">#00000000</color>
+
+    <color name="date_text1">#59B29C</color>
+    <color name="date_text2">#333333</color>
+    <color name="date_background">#FFFFFF</color>
+    <color name="split_line">#11112233</color>
+
+    <color name="gray">#9c9fa2a5</color>
+    <color name="red">#ebf6032c</color>
 </resources>

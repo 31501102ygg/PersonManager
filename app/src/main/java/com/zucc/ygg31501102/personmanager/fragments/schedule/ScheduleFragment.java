@@ -1,6 +1,5 @@
-package com.zucc.ygg31501102.personmanager.fragments;
+package com.zucc.ygg31501102.personmanager.fragments.schedule;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -17,19 +16,19 @@ import com.zucc.ygg31501102.personmanager.R;
 
 import java.util.ArrayList;
 
-public class IncomeExpenditureFragment  extends Fragment{
+public class ScheduleFragment extends Fragment {
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
-    private String[] mTitle = {"收入","支出"};
+    private String[] mTitle = {"代办日程","循环日程"};
     ArrayList<Fragment> fragments = new ArrayList<Fragment>();
-    @SuppressLint("ClickableViewAccessibility")
+//    private PersonManagerDatabaseHelper databaseHelper;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_income_expenditure, null);
+        View view = inflater.inflate(R.layout.fragment_schedules, null);
         initDate();
-        mTabLayout = (TabLayout) view.findViewById(R.id.tablayout);
-        mViewPager = (ViewPager) view.findViewById(R.id.income_viewpager);
+        mTabLayout = (TabLayout) view.findViewById(R.id.schedule_tablayout);
+        mViewPager = (ViewPager) view.findViewById(R.id.schedule_viewpager);
         mViewPager.setAdapter(new FragmentPagerAdapter(getChildFragmentManager()) {
             //此方法用来显示tab上的名字
             @Override
@@ -39,7 +38,7 @@ public class IncomeExpenditureFragment  extends Fragment{
 
             @Override
             public Fragment getItem(int position) {
-               return fragments.get(position);
+                return fragments.get(position);
             }
 
             @Override
@@ -51,7 +50,7 @@ public class IncomeExpenditureFragment  extends Fragment{
         mViewPager.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                return true;
+                return false;
             }
         });
         //将ViewPager关联到TabLayout上
@@ -72,19 +71,19 @@ public class IncomeExpenditureFragment  extends Fragment{
 
             }
         });
-
         return view;
     }
 
     private void initDate(){
         if(fragments.size()==0) {
-            fragments.add(new IncomeExpenditureTabFragment());
-            fragments.add(new IncomeExpenditureTabFragment());
+            fragments.add(new EchoScheduleRecyclerViewFragment());
+            fragments.add(new EchoScheduleRecyclerViewFragment());
         }
         else{
             fragments.clear();
-            fragments.add(new IncomeExpenditureTabFragment());
-            fragments.add(new IncomeExpenditureTabFragment());
+            fragments.add(new EchoScheduleRecyclerViewFragment());
+            fragments.add(new EchoScheduleRecyclerViewFragment());
         }
     }
+
 }

@@ -16,6 +16,16 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_alignParentRight="true"
+            android:layout_margin="@dimen/fab_margin"
+            android:layout_above="@id/navigation"
+            app:srcCompat="@drawable/plus" />
+
         <android.support.design.widget.BottomNavigationView
             android:id="@+id/navigation"
             android:layout_alignParentBottom="true"
@@ -25,6 +35,7 @@
             android:background="?android:attr/windowBackground"
             app:menu="@menu/navigation" />
     </RelativeLayout>
+
     <android.support.design.widget.NavigationView
         android:id="@+id/nav_view"
         android:layout_width="wrap_content"

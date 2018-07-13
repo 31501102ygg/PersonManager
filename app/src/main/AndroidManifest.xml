@@ -27,7 +27,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".LoginActivity_1">
+        <activity android:name=".LoginActivity_1"
+            android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -40,7 +41,16 @@
             android:label="@string/title_activity_login" />
         <activity
             android:name=".RegisterActivity"
-            android:label="@string/register" />
+            android:label="@string/register"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".AddExpendActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:label="添加收支"
+            android:windowSoftInputMode="adjustPan"/>
+        <activity android:name=".BalanceStatisticsActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:label="收支统计"/>
     </application>
 
 </manifest>
