@@ -17,7 +17,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.zucc.ygg31501102.personmanager.R;
-import com.zucc.ygg31501102.personmanager.database.PersonManagerDatabaseHelper;
 
 import java.util.ArrayList;
 
@@ -27,7 +26,6 @@ public class IncomeExpenditureFragment  extends Fragment{
     public static TextView mBalance;
     private String[] mTitle = {"收入","支出"};
     ArrayList<Fragment> fragments = new ArrayList<Fragment>();
-    private  PersonManagerDatabaseHelper databaseHelper;
     @SuppressLint("ClickableViewAccessibility")
     @Nullable
     @Override
@@ -97,8 +95,7 @@ public class IncomeExpenditureFragment  extends Fragment{
 
     public float getDateBaseBalance(){
         float balance = 0;
-        databaseHelper = new PersonManagerDatabaseHelper(getActivity(),"PersonManager.db",null,1);
-        SQLiteDatabase db = databaseHelper.getReadableDatabase();
+        SQLiteDatabase db = com.zucc.ygg31501102.personmanager.MainActivity.databaseHelper.getReadableDatabase();
         String [] columns = {"number"};
         Cursor cursor = db.query("expends",columns,null,null,null,null,null);
         if (cursor.moveToFirst()) {

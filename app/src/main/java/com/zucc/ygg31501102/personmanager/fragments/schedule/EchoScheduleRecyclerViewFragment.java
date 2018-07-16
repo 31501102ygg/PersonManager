@@ -1,27 +1,35 @@
 package com.zucc.ygg31501102.personmanager.fragments.schedule;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
-import android.database.Cursor;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.Toast;
+
+import com.zucc.ygg31501102.personmanager.MainActivity;
+import com.zucc.ygg31501102.personmanager.ScheduleInfoActivity;
+import com.zucc.ygg31501102.personmanager.modal.Schedule;
 
 import com.zucc.ygg31501102.personmanager.R;
 import com.zucc.ygg31501102.personmanager.database.PersonManagerDatabaseHelper;
-import com.zucc.ygg31501102.personmanager.fragments.incomeexpend.IncomeExpenditureFragment;
 import com.zucc.ygg31501102.personmanager.fragments.incomeexpend.RecyclerViewAdapter;
-import com.zucc.ygg31501102.personmanager.modal.Expend;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -30,15 +38,17 @@ import java.util.Date;
 public class EchoScheduleRecyclerViewFragment extends Fragment{
     private RecyclerView mRecyclerView;
     private ScheduleAdapter mAdapter;
-    private ArrayList<String> list = new ArrayList<String>();
-    private PersonManagerDatabaseHelper databaseHelper;
+    private ArrayList<Schedule> list = new ArrayList<Schedule>();
+    private LocalBroadcastManager mLBM;
+    private Intent mIntent;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_schedule_recyclerview, null);
-        databaseHelper = new PersonManagerDatabaseHelper(getActivity(),"PersonManager.db",null,1);
 //        initExpends();
-        init();
+        mLBM = LocalBroadcastManager.getInstance(getActivity());
+        initSchedule();
         //通过findViewById拿到RecyclerView实例
         mRecyclerView = (RecyclerView)view.findViewById(R.id.schedule_listview);
         //设置RecyclerView管理器
@@ -60,6 +70,12 @@ public class EchoScheduleRecyclerViewFragment extends Fragment{
                 dialog.setNegativeButton("确定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+                        Intent intent1=new Intent();
+                        intent1.setClass(getActivity(), ScheduleInfoActivity.class);//从一个activity跳转到另一个activityIntent intent = new Intent(this, OtherActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("schedule", list.get(position));
+                        intent1.putExtras(bundle);
+                        startActivity(intent1);
                     }
                 });
                 dialog.show();
@@ -73,7 +89,13 @@ public class EchoScheduleRecyclerViewFragment extends Fragment{
                 dialog.setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        mAdapter.removeData(position);
+                        int id[] = mAdapter.removeData(position);
+                        ScheduleRemoveFromDatebase(""+id[0]);if (id[1] > 0) {
+                            if (mIntent == null)
+                                mIntent = new Intent("com.zucc.ygg31501102.personmanager.removeschedule");
+                            mIntent.putExtra("scheduleid", id);
+                            mLBM.sendBroadcast(mIntent);
+                        }
                     }
                 });
                 dialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
@@ -84,11 +106,18 @@ public class EchoScheduleRecyclerViewFragment extends Fragment{
                 dialog.show();
             }
         });
+
         return view;
     }
-    public void init(){
-        for (int i=0;i<20;i++){
-            list.add(String.valueOf(i));
-        }
+
+    public void initSchedule(){
+        this.list = ScheduleFragment.RecyclerSchedule;
     }
+
+    public void ScheduleRemoveFromDatebase(String id){
+        SQLiteDatabase db = MainActivity.databaseHelper.getReadableDatabase();
+        db.delete("schedules","scheduleid = ?",new String[]{id});
+    }
+
+
 }

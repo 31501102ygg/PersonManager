@@ -28,7 +28,6 @@ import pl.com.salsoft.sqlitestudioremote.SQLiteStudioService;
 
 
 public class AddExpendActivity extends AppCompatActivity{
-    private PersonManagerDatabaseHelper databaseHelper;
     private ImageView backImage;
     private EditText textMoney;
     private EditText textName;
@@ -59,9 +58,6 @@ public class AddExpendActivity extends AppCompatActivity{
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_addexpense);
-
-        databaseHelper = new PersonManagerDatabaseHelper(this,"PersonManager.db",null,1);
-        databaseHelper.getWritableDatabase();
 
         backImage = (ImageView)findViewById(R.id.expend_add_back);
         backImage.setOnClickListener(new View.OnClickListener() {
@@ -299,7 +295,7 @@ public class AddExpendActivity extends AppCompatActivity{
             Toast.makeText(this,"时间格式不正确",Toast.LENGTH_SHORT).show();
             return false;
         }
-        SQLiteDatabase db = databaseHelper.getWritableDatabase();
+        SQLiteDatabase db = MainActivity.databaseHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("number",Money);
         values.put("expendtype",type);

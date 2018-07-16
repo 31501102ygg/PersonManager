@@ -5,7 +5,7 @@ android {
     defaultConfig {
         applicationId "com.zucc.ygg31501102.personmanager"
         minSdkVersion 16
-        targetSdkVersion 28
+        targetSdkVersion 23
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -41,4 +41,10 @@ dependencies {
     //如果你想应用能够兼容Android6.0，请添加此依赖(org.apache.http.legacy.jar)
     implementation 'cn.bmob.android:http-legacy:1.0'
     implementation files('libs/SQLiteStudioRemote.jar')
+
+    implementation 'com.amap.api:location:latest.integration'
+
+    //ButterKnife框架
+    implementation 'com.jakewharton:butterknife:8.8.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
 }

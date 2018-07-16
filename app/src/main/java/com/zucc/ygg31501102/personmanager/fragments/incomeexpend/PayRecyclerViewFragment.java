@@ -17,7 +17,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.zucc.ygg31501102.personmanager.R;
-import com.zucc.ygg31501102.personmanager.database.PersonManagerDatabaseHelper;
+import com.zucc.ygg31501102.personmanager.MainActivity;
 import com.zucc.ygg31501102.personmanager.modal.Expend;
 
 import java.text.SimpleDateFormat;
@@ -28,12 +28,10 @@ public class PayRecyclerViewFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private RecyclerViewAdapter mAdapter;
     private ArrayList<Expend> lists = new ArrayList<Expend>();
-    private PersonManagerDatabaseHelper databaseHelper;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_recyclerview, null);
-        databaseHelper = new PersonManagerDatabaseHelper(getActivity(),"PersonManager.db",null,1);
         initExpends();
         //通过findViewById拿到RecyclerView实例
         mRecyclerView = (RecyclerView)view.findViewById(R.id.listview);
@@ -86,7 +84,7 @@ public class PayRecyclerViewFragment extends Fragment {
     }
 
     public void initExpends(){
-        SQLiteDatabase db = databaseHelper.getReadableDatabase();
+        SQLiteDatabase db = MainActivity.databaseHelper.getReadableDatabase();
         lists.clear();
         String [] columns = {"expendid","number","expendtype","expendname","expendremark","expendcreatedate"};
         Cursor cursor = db.query("expends",columns,"number >= 0",null,null,null,null);
@@ -120,7 +118,7 @@ public class PayRecyclerViewFragment extends Fragment {
     }
 
     public void ExpendRemoveFromDatebase(String id){
-        SQLiteDatabase db = databaseHelper.getReadableDatabase();
+        SQLiteDatabase db = MainActivity.databaseHelper.getReadableDatabase();
         db.delete("expends","expendid = ?",new String[]{id});
     }
 }

@@ -15,6 +15,18 @@ public class PersonManagerDatabaseHelper extends SQLiteOpenHelper {
             +"expendcreatedate integer,"//创建日期
             +"expendremovedate integer)";//更新日期
 
+    public static final String CREATE_SCHEDULE = "create table schedules ("
+            +"scheduleid integer primary key autoincrement,"//日程id
+            +"userid text,"//用户id
+            +"startdate integer,"//开始时间
+            +"enddate integer,"//结束时间
+            +"scheduletitle text,"//名称
+            +"scheduleremark text,"//备注
+            +"days integer,"//下一次出发日程间隔时间
+            +"picaddress text,"//图片保存本地地址
+            +"scheduleaddress text,"//地址
+            +"state int)";//状态
+
     private Context mContext;
 
     public PersonManagerDatabaseHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version){
@@ -25,11 +37,14 @@ public class PersonManagerDatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_EXPEND);
+        db.execSQL(CREATE_SCHEDULE);
         Toast.makeText(mContext,"Create succeeded",Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int i, int i1) {
-
+        db.execSQL("drop table if exists expends");
+        db.execSQL("drop table if exists schedule");
+        onCreate(db);
     }
 }

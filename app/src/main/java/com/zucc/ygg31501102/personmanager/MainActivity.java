@@ -1,15 +1,27 @@
 package com.zucc.ygg31501102.personmanager;
 
+import android.Manifest;
+import android.content.BroadcastReceiver;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.ServiceConnection;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.nfc.Tag;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -29,6 +41,9 @@ import com.zucc.ygg31501102.personmanager.database.PersonManagerDatabaseHelper;
 import com.zucc.ygg31501102.personmanager.fragments.BaseFragment;
 import com.zucc.ygg31501102.personmanager.fragments.incomeexpend.IncomeExpenditureFragment;
 import com.zucc.ygg31501102.personmanager.fragments.schedule.ScheduleFragment;
+import com.zucc.ygg31501102.personmanager.service.ScheduleRemind;
+
+import java.io.FileNotFoundException;
 
 import pl.com.salsoft.sqlitestudioremote.SQLiteStudioService;
 
@@ -37,13 +52,29 @@ import static com.zucc.ygg31501102.personmanager.BottomNavigationViewHelper.*;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    public static PersonManagerDatabaseHelper databaseHelper;
     private ViewPager viewPager;
     private MenuItem menuItem;
     private BottomNavigationView bottomNavigationView;
-    private PersonManagerDatabaseHelper databaseHelper;
     private PopupWindow window;
     private String[] FloatNavTitles = {"添加收支","添加日程"};
+    public static int currentNavItem = 0;
+    private ScheduleRemind.ScheduleRemindBinder scheduleRemindBinder;
+    private LocalReceiver localReceiver;
+    private LocalBroadcastManager mLBM;
 
+    private ServiceConnection connection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
+            scheduleRemindBinder = (ScheduleRemind.ScheduleRemindBinder) iBinder;
+                scheduleRemindBinder.Timer();
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName componentName) {
+
+        }
+    };
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +83,7 @@ public class MainActivity extends AppCompatActivity
 
         databaseHelper = new PersonManagerDatabaseHelper(this,"PersonManager.db",null,1);
         databaseHelper.getWritableDatabase();
-
+        mLBM = LocalBroadcastManager.getInstance(this);
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigation);
         //默认 >3 的选中效果会影响ViewPager的滑动切换时的效果，故利用反射去掉
@@ -63,15 +94,19 @@ public class MainActivity extends AppCompatActivity
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                         switch (item.getItemId()) {
                             case R.id.navigation_home:
+                                currentNavItem = 0;
                                 viewPager.setCurrentItem(0);
                                 break;
                             case R.id.navigation_dashboard:
+                                currentNavItem = 1;
                                 viewPager.setCurrentItem(1);
                                 break;
                             case R.id.navigation_notifications:
+                                currentNavItem = 2;
                                 viewPager.setCurrentItem(2);
                                 break;
                             case R.id.navigation_daiding:
+                                currentNavItem = 3;
                                 viewPager.setCurrentItem(3);
                                 break;
                         }
@@ -119,13 +154,17 @@ public class MainActivity extends AppCompatActivity
                 lsvMore.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        Intent intent;
                         switch (position){
                             case 0:
-                                Intent intent = new Intent(MainActivity.this, AddExpendActivity.class);
+                                currentNavItem = 0;
+                                intent = new Intent(MainActivity.this, AddExpendActivity.class);
                                 startActivity(intent);
                                 break;
                             case 1:
-                                Toast.makeText(getApplicationContext(),position+"被点击",Toast.LENGTH_SHORT).show();
+                                currentNavItem = 1;
+                                intent = new Intent(MainActivity.this, AddScheduleActivity.class);
+                                startActivity(intent);
                                 break;
                         }
                         window.dismiss();
@@ -158,7 +197,14 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        //开启推送服务
+        Intent startIntent = new Intent(this, ScheduleRemind.class);
+        bindService(startIntent,connection,BIND_AUTO_CREATE);
 
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("com.zucc.ygg31501102.personmanager.removeschedule");
+        localReceiver = new LocalReceiver();
+        mLBM.registerReceiver(localReceiver,intentFilter);
         //sqlite可视化
         SQLiteStudioService.instance().start(this);
     }
@@ -235,11 +281,22 @@ public class MainActivity extends AppCompatActivity
     protected void onPostResume() {
         super.onPostResume();
         setupViewPager(viewPager);
+        viewPager.setCurrentItem(currentNavItem);
+
     }
 
     @Override
     protected void onDestroy() {
         SQLiteStudioService.instance().stop();
         super.onDestroy();
+    }
+
+    class LocalReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Toast.makeText(getApplication(),"接受到更新广播", Toast.LENGTH_SHORT).show();
+            setupViewPager(viewPager);
+            viewPager.setCurrentItem(currentNavItem);
+        }
     }
 }

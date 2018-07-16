@@ -18,6 +18,19 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <!-- 允许读取手机状态 用于创建BmobInstallation -->
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <!--用于进行网络定位-->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"></uses-permission>
+    <!--用于访问GPS定位-->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"></uses-permission>
+    <!--用于获取wifi的获取权限，wifi信息会用来进行网络定位-->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"></uses-permission>
+    <!--用于申请调用A-GPS模块-->
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS"></uses-permission>
+    <!--用于申请获取蓝牙信息进行室内定位-->
+    <uses-permission android:name="android.permission.BLUETOOTH"></uses-permission>
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"></uses-permission>
+
+    <uses-permission android:name="android.permission.CAMERA"/>
 
     <application
         android:allowBackup="true"
@@ -51,6 +64,16 @@
         <activity android:name=".BalanceStatisticsActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:label="收支统计"/>
+        <activity android:name=".AddScheduleActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:label="添加日程"/>
+        <activity android:name=".ScheduleInfoActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:label="日程信息"/>
+
+        <service android:name=".service.ScheduleRemind"></service>
+        <service android:name="com.amap.api.location.APSService"></service>
+        <meta-data android:name="com.amap.api.v2.apikey" android:value="42bc7bf109a289ec5eeb09a191d19ae6"></meta-data>
     </application>
 
 </manifest>

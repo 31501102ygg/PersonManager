@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/s_info_img"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="10dp"
+            android:src="@drawable/keyboard_backspace" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_margin="10dp"
+            android:layout_toRightOf="@+id/s_info_img"
+            android:text="日程内容"
+            android:textColor="@color/colorPrimary"
+            android:textSize="24sp" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="200dp"
+            android:layout_height="400dp">
+
+            <ImageView
+                android:id="@+id/s_info_pic"
+                android:layout_width="200dp"
+                android:layout_height="250dp"
+                android:src="@drawable/header" />
+
+            <TextView
+                android:id="@+id/s_info_address"
+                android:layout_width="200dp"
+                android:layout_height="150dp"
+                android:layout_below="@+id/s_info_pic"
+                android:gravity="center_vertical|center"
+                android:text="浙江大学城市学院计算机与计算科学学院"
+                android:textColor="@color/dark_blue"
+                android:textSize="18sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="20dp">
+
+            <TextView
+                android:id="@+id/s_info_title"
+                android:layout_width="200dp"
+                android:layout_height="100dp"
+                android:gravity="center_vertical"
+                android:text="中饭"
+                android:textColor="@color/dark_blue"
+                android:textSize="30sp" />
+
+            <TextView
+                android:id="@+id/s_info_remark"
+                android:layout_width="200dp"
+                android:layout_height="150dp"
+                android:layout_below="@+id/s_info_loopdays"
+                android:text="按时吃饭，精神好"
+                android:textColor="@color/dark_blue"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/s_info_start_time"
+                android:layout_width="200dp"
+                android:layout_height="50dp"
+                android:layout_below="@+id/s_info_title"
+                android:gravity="center_vertical"
+                android:text="2018-7-16 17：00"
+                android:textColor="@color/dark_blue"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/s_info_end_time"
+                android:layout_width="200dp"
+                android:layout_height="50dp"
+                android:layout_below="@+id/s_info_start_time"
+                android:gravity="center_vertical"
+                android:text="2018-7-16 17：30"
+                android:textColor="@color/dark_blue"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/s_info_loopdays"
+                android:layout_width="200dp"
+                android:layout_height="50dp"
+                android:layout_below="@+id/s_info_end_time"
+                android:gravity="center_vertical"
+                android:text="3天"
+                android:textColor="@color/dark_blue"
+                android:textSize="18sp" />
+        </RelativeLayout>
+    </LinearLayout>
+
+</LinearLayout>

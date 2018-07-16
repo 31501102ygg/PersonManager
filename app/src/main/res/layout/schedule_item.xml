@@ -16,36 +16,59 @@
             android:layout_margin="16dp"
             android:src="@drawable/icons8_circle_48"/>
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_alignTop="@+id/schedule_item_img"
+            android:layout_toRightOf="@+id/schedule_item_img">
+
+            <ImageView
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/icons8_circle_start_48" />
+
+            <TextView
+                android:id="@+id/schedule_item_start_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:text="2017-07-07"
+                android:textColor="@color/black"
+                android:textSize="16dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_alignBottom="@+id/schedule_item_img"
+            android:layout_toRightOf="@+id/schedule_item_img">
+            <ImageView
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:layout_gravity="center_vertical"
+            android:src="@drawable/icons8_circle_end_48"/>
+
+            <TextView
+                android:id="@+id/schedule_item_end_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:text="2017-07-07"
+                android:textColor="@color/black"
+                android:textSize="16dp" />
+        </LinearLayout>
+
         <TextView
             android:id="@+id/schedule_item_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/schedule_item_img"
-            android:layout_toRightOf="@+id/schedule_item_img"
-            android:text="行车交通"
-            android:textColor="@color/black"
-            android:textSize="16dp" />
-
-        <TextView
-            android:id="@+id/schedule_item_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/schedule_item_img"
-            android:layout_toRightOf="@+id/schedule_item_img"
-            android:text="2017-07-07"
-            android:textColor="@color/black"
-            android:textSize="12dp" />
-
-        <TextView
-            android:id="@+id/schedule_item_money"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
-            android:text="-5000.0"
+            android:text="吃饭睡觉打游戏"
             android:textColor="@color/black"
-            android:textSize="16dp" />
+            android:textSize="24sp" />
     </RelativeLayout>
 </LinearLayout>

@@ -40,8 +40,7 @@ public class BalanceStatisticsActivity extends AppCompatActivity{
         float income = 0;
         datas = new float[6];
         String [] columns = {"number"};
-        dbHelper = new PersonManagerDatabaseHelper(this, "PersonManager.db", null, 1);
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        SQLiteDatabase db = MainActivity.databaseHelper.getReadableDatabase();
         Cursor cursor = db.query("expends",columns,null,null,null,null,null);
         if(cursor.moveToFirst()) {
             do {

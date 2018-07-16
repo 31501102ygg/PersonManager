@@ -17,7 +17,6 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.zucc.ygg31501102.personmanager.R;
-import com.zucc.ygg31501102.personmanager.database.PersonManagerDatabaseHelper;
 import com.zucc.ygg31501102.personmanager.modal.Expend;
 
 import java.text.SimpleDateFormat;
@@ -28,12 +27,10 @@ public class IncomeRecyclerViewFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private RecyclerViewAdapter mAdapter;
     private ArrayList<Expend> lists = new ArrayList<Expend>();
-    private PersonManagerDatabaseHelper databaseHelper;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_recyclerview, null);
-        databaseHelper = new PersonManagerDatabaseHelper(getActivity(),"PersonManager.db",null,1);
         initExpends();
         //通过findViewById拿到RecyclerView实例
         mRecyclerView = (RecyclerView)view.findViewById(R.id.listview);
@@ -86,7 +83,7 @@ public class IncomeRecyclerViewFragment extends Fragment {
     }
 
     public void initExpends(){
-        SQLiteDatabase db = databaseHelper.getReadableDatabase();
+        SQLiteDatabase db = com.zucc.ygg31501102.personmanager.MainActivity.databaseHelper.getReadableDatabase();
         lists.clear();
         String [] columns = {"expendid","number","expendtype","expendname","expendremark","expendcreatedate"};
         Cursor cursor = db.query("expends",columns,"number < 0",null,null,null,null);
@@ -120,7 +117,7 @@ public class IncomeRecyclerViewFragment extends Fragment {
     }
 
     public void ExpendRemoveFromDatebase(String id){
-        SQLiteDatabase db = databaseHelper.getReadableDatabase();
+        SQLiteDatabase db = com.zucc.ygg31501102.personmanager.MainActivity.databaseHelper.getReadableDatabase();
         db.delete("expends","expendid = ?",new String[]{id});
     }
 
@@ -130,8 +127,7 @@ public class IncomeRecyclerViewFragment extends Fragment {
 
     public float getDateBaseBalance(){
         float balance = 0;
-        databaseHelper = new PersonManagerDatabaseHelper(getActivity(),"PersonManager.db",null,1);
-        SQLiteDatabase db = databaseHelper.getReadableDatabase();
+        SQLiteDatabase db = com.zucc.ygg31501102.personmanager.MainActivity.databaseHelper.getReadableDatabase();
         String [] columns = {"number"};
         Cursor cursor = db.query("expends",columns,null,null,null,null,null);
         if (cursor.moveToFirst()) {

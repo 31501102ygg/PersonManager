@@ -1,6 +1,6 @@
 package com.zucc.ygg31501102.personmanager.fragments.schedule;
 
-import android.support.annotation.NonNull;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,32 +11,35 @@ import android.widget.TextView;
 import com.zucc.ygg31501102.personmanager.R;
 import com.zucc.ygg31501102.personmanager.fragments.incomeexpend.RecyclerViewAdapter;
 import com.zucc.ygg31501102.personmanager.modal.Expend;
+import com.zucc.ygg31501102.personmanager.modal.Schedule;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.zucc.ygg31501102.personmanager.fragments.incomeexpend.RecyclerViewAdapter.getStringDate;
+
 
 public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ScheduleViewHolder>{
-    private List<Expend> expendsList;
-    private List<String> textList;
+    private List<Schedule> schedulesList;
     private View view;
     private RecyclerViewAdapter.OnItemClickListener OnItemClickListener = null;
+    private Uri photoUri = Uri.fromFile(new File("/storage/emulated/0/DCIM/Alipay/1490526003679.jpeg"));
 
-
-    public ScheduleAdapter(List<String> textList) {
-        this.textList = textList;
+    public ScheduleAdapter(List<Schedule> schedulesList) {
+        this.schedulesList = schedulesList;
     }
 
     @Override
     public ScheduleViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
     {
         ScheduleViewHolder holder = new ScheduleViewHolder(LayoutInflater.from(
-                parent.getContext()).inflate(R.layout.item, parent,
+                parent.getContext()).inflate(R.layout.schedule_item, parent,
                 false));
-        view = LayoutInflater.from(parent.getContext()).inflate(R.layout.expend_type_item, null);
+//        view = LayoutInflater.from(parent.getContext()).inflate(R.layout.expend_type_item, null);
 
         return holder;
     }
@@ -44,12 +47,18 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.Schedu
     @Override
     public void onBindViewHolder(ScheduleViewHolder holder, final int position)
     {
-//        String date = getStringDate(expendsList.get(position).getExpendcreatedate());
-//        holder.money.setText(""+expendsList.get(position).getNumber());
-//        holder.item_date.setText(date);
-//        holder.item_title.setText(expendsList.get(position).getExpendname());
-//        holder.item_img.setImageResource(map.get(expendsList.get(position).getExpendtype()));
-//
+        holder.schedule_item_title.setText(""+schedulesList.get(position).getTitle());
+        String date = getStringDate(schedulesList.get(position).getStartDate());
+        holder.schedule_item_start_time.setText(date);
+        date = getStringDate(schedulesList.get(position).getEndDate());
+        holder.schedule_item_end_time.setText(date);
+        try {
+            Uri uri = Uri.fromFile(new File(schedulesList.get(position).getImage()));
+            holder.schedule_item_img.setImageURI(uri);
+        }catch(Exception e){
+            holder.schedule_item_img.setImageURI(photoUri);
+        }
+
         if( OnItemClickListener!= null){
             holder.itemView.setOnClickListener( new View.OnClickListener() {
                 @Override
@@ -66,9 +75,9 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.Schedu
             });
         }
     }
-    public int  removeData(int position) {
-        int id = expendsList.get(position).getExpendid();
-        expendsList.remove(position);
+    public int[]  removeData(int position) {
+        int id []= {schedulesList.get(position).getScheduleid(),schedulesList.get(position).getDays()};
+        schedulesList.remove(position);
         //删除动画
         notifyItemRemoved(position);
         notifyDataSetChanged();
@@ -86,25 +95,23 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.Schedu
     @Override
     public int getItemCount()
     {
-        return textList.size();
+        return schedulesList.size();
     }
 
     class ScheduleViewHolder extends RecyclerView.ViewHolder
     {
 
-//        TextView money;
-//        TextView item_date;
-//        TextView item_title;
-//        ImageView item_img;
+        TextView schedule_item_title;
+        TextView schedule_item_start_time;
+        TextView schedule_item_end_time;
+        ImageView schedule_item_img;
         public ScheduleViewHolder(View view)
         {
             super(view);
-//            money = (TextView) view.findViewById(R.id.item_money);
-//            item_date = (TextView) view.findViewById(R.id.item_date);
-//            item_title = (TextView) view.findViewById(R.id.item_title);
-//            item_img = (ImageView) view.findViewById(R.id.item_img);
+            schedule_item_title = (TextView) view.findViewById(R.id.schedule_item_title);
+            schedule_item_start_time = (TextView) view.findViewById(R.id.schedule_item_start_time);
+            schedule_item_end_time = (TextView) view.findViewById(R.id.schedule_item_end_time);
+            schedule_item_img = (ImageView) view.findViewById(R.id.schedule_item_img);
         }
     }
-
-
 }
