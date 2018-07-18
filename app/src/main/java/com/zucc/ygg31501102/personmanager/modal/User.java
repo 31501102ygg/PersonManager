@@ -8,21 +8,31 @@ public class User extends BmobObject {
     private String userid;
     private String password;
     private String useremail;
+    private float balance;
+    private String  phonenumber;
 
-    public String getName() {
+    public String getPhonenumber() {
+        return phonenumber;
+    }
+
+    public void setPhonenumber(String phonenumber) {
+        this.phonenumber = phonenumber;
+    }
+
+    public String getUsername() {
         return username;
     }
 
-    public void setName(String name) {
-        this.username = name;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public String getId() {
+    public String getUserid() {
         return userid;
     }
 
-    public void setId(String id) {
-        this.userid = id;
+    public void setUserid(String userid) {
+        this.userid = userid;
     }
 
     public String getPassword() {
@@ -33,12 +43,19 @@ public class User extends BmobObject {
         this.password = password;
     }
 
-    public String getEmail() {
+    public String getUseremail() {
         return useremail;
     }
 
-    public void setEmail(String email) {
-        this.useremail = email;
+    public void setUseremail(String useremail) {
+        this.useremail = useremail;
     }
 
+    public float getBalance() {
+        return balance;
+    }
+
+    public void setBalance(float balance) {
+        this.balance = balance;
+    }
 }

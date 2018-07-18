@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -18,12 +19,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.zucc.ygg31501102.personmanager.database.PersonManagerDatabaseHelper;
+import com.zucc.ygg31501102.personmanager.modal.Expend;
+import com.zucc.ygg31501102.personmanager.modal.User;
 import com.zucc.ygg31501102.personmanager.plug_in.CustomDatePicker;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import cn.bmob.v3.Bmob;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.SaveListener;
+import cn.bmob.v3.listener.UpdateListener;
 import pl.com.salsoft.sqlitestudioremote.SQLiteStudioService;
 
 
@@ -295,14 +302,67 @@ public class AddExpendActivity extends AppCompatActivity{
             Toast.makeText(this,"时间格式不正确",Toast.LENGTH_SHORT).show();
             return false;
         }
-        SQLiteDatabase db = MainActivity.databaseHelper.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put("number",Money);
-        values.put("expendtype",type);
-        values.put("expendname",name);
-        values.put("expendremark",remark);
-        values.put("expendcreatedate",dateToLong);
-        db.insert("expends",null,values);
+
+        Expend expend = new Expend();
+        expend.setExpendname(name);
+        expend.setExpendremark(remark);
+        expend.setExpendtype(type);
+        expend.setNumber(Money);
+        expend.setExpendcreatedate(dateToLong);
+        expend.setUserid(User.currentUser.getUserid());
+        expend.save(new SaveListener<String>() {
+            @Override
+            public void done(String s, BmobException e) {
+                if(e==null){
+                    Log.i("bmob_expend","成功");
+                    String StringMoney = textMoney.getText().toString();
+                    String name = textName.getText().toString();
+                    String remark = textRemark.getText().toString();
+                    String type = selectType;
+                    String createDate = textTime.getText().toString();
+                    float Money = Float.valueOf(StringMoney);
+                    long dateToLong;
+                    try {
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                        Date date = sdf.parse(createDate);
+                        dateToLong = dateToLong(date);
+                    }catch(Exception e1){
+                        return ;
+                    }
+                    if (!ifIncome){
+                        Money = -Money;
+                    }
+                    SQLiteDatabase db = MainActivity.databaseHelper.getWritableDatabase();
+                    ContentValues values = new ContentValues();
+                    values.put("number",Money);
+                    values.put("expendtype",type);
+                    values.put("expendname",name);
+                    values.put("expendremark",remark);
+                    values.put("userid",User.currentUser.getUserid());
+                    values.put("expendcreatedate",dateToLong);
+                    db.insert("expends",null,values);
+                    float balance = User.currentUser.getBalance();
+                    balance += Money;
+                    User.currentUser.setBalance(balance);
+                    User user = new User();
+                    user.setValue("balance",balance);
+                    user.update(User.currentUser.getObjectId(), new UpdateListener() {
+                        @Override
+                        public void done(BmobException e) {
+                            if(e==null){
+                                Log.i("bmob","更新成功");
+                            }else{
+                                Log.i("bmob","更新失败："+e.getMessage()+","+e.getErrorCode());
+                            }
+                        }
+                    });
+                    finish();
+                }else{
+                    Log.i("bmob_expend","失败");
+                }
+            }
+        });
+
         return true;
     }
 

@@ -17,7 +17,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.zucc.ygg31501102.personmanager.R;
+import com.zucc.ygg31501102.personmanager.modal.User;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class IncomeExpenditureFragment  extends Fragment{
@@ -25,6 +27,7 @@ public class IncomeExpenditureFragment  extends Fragment{
     private ViewPager mViewPager;
     public static TextView mBalance;
     private String[] mTitle = {"收入","支出"};
+    public static DecimalFormat decimalFormat =new DecimalFormat("0.00");
     ArrayList<Fragment> fragments = new ArrayList<Fragment>();
     @SuppressLint("ClickableViewAccessibility")
     @Nullable
@@ -83,32 +86,32 @@ public class IncomeExpenditureFragment  extends Fragment{
 
     private void initDate(){
         if(fragments.size()==0) {
-            fragments.add(new PayRecyclerViewFragment());
             fragments.add(new IncomeRecyclerViewFragment());
+            fragments.add(new PayRecyclerViewFragment());
         }
         else{
             fragments.clear();
-            fragments.add(new PayRecyclerViewFragment());
             fragments.add(new IncomeRecyclerViewFragment());
+            fragments.add(new PayRecyclerViewFragment());
         }
     }
-
-    public float getDateBaseBalance(){
-        float balance = 0;
-        SQLiteDatabase db = com.zucc.ygg31501102.personmanager.MainActivity.databaseHelper.getReadableDatabase();
-        String [] columns = {"number"};
-        Cursor cursor = db.query("expends",columns,null,null,null,null,null);
-        if (cursor.moveToFirst()) {
-            do {
-                float number = cursor.getFloat(cursor.getColumnIndex("number"));
-                balance += number;
-            } while (cursor.moveToNext());
-        }
-        cursor.close();
-        return balance;
-
-    }
+//
+//    public float getDateBaseBalance(){
+//        float balance = 0;
+//        SQLiteDatabase db = com.zucc.ygg31501102.personmanager.MainActivity.databaseHelper.getReadableDatabase();
+//        String [] columns = {"number"};
+//        Cursor cursor = db.query("expends",columns,null,null,null,null,null);
+//        if (cursor.moveToFirst()) {
+//            do {
+//                float number = cursor.getFloat(cursor.getColumnIndex("number"));
+//                balance += number;
+//            } while (cursor.moveToNext());
+//        }
+//        cursor.close();
+//        return balance;
+//
+//    }
     public void setBalance(){
-        mBalance.setText(""+getDateBaseBalance());
+        mBalance.setText( decimalFormat.format(User.currentUser.getBalance()));
     }
 }

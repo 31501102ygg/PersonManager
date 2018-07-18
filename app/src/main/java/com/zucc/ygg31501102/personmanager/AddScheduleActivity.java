@@ -333,11 +333,11 @@ public class AddScheduleActivity extends AppCompatActivity {
             return;
         }
 
-        Toast.makeText(this,""+User.currentUser.getId(),Toast.LENGTH_SHORT).show();
+        Toast.makeText(this,""+User.currentUser.getUserid(),Toast.LENGTH_SHORT).show();
         SQLiteDatabase db = databaseHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("scheduletitle",title);
-        values.put("userid", User.currentUser.getId());
+        values.put("userid", User.currentUser.getUserid());
         values.put("startdate",longStartDate);
         values.put("enddate",longEndDate);
         values.put("scheduleaddress",address);

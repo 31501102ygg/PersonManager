@@ -82,9 +82,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         //第一：默认初始化
         Bmob.initialize(this, "e6e554c7e514fa01eee26c056b20ec19");
         User newUser = new User();
-        newUser.setEmail("409803540@qq.com");
-        newUser.setName("乌龟滑翔");
-        newUser.setId("31501102");
+        newUser.setUseremail("409803540@qq.com");
+        newUser.setUsername("乌龟滑翔");
+        newUser.setUserid("31501102");
         newUser.setPassword("123456789");
         newUser.save(new SaveListener<String>() {
             @Override
@@ -102,7 +102,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      @Override
             public void done(User object, BmobException e) {
                 if(e==null){
-                    Log.i("bmob","成功："+object.getName()+",");
+                    Log.i("bmob","成功："+object.getUsername()+",");
                 }else{
                     Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
                 }

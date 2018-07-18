@@ -40,6 +40,7 @@ import android.widget.Toast;
 import com.zucc.ygg31501102.personmanager.database.PersonManagerDatabaseHelper;
 import com.zucc.ygg31501102.personmanager.fragments.BaseFragment;
 import com.zucc.ygg31501102.personmanager.fragments.incomeexpend.IncomeExpenditureFragment;
+import com.zucc.ygg31501102.personmanager.fragments.invest.InvestFragment;
 import com.zucc.ygg31501102.personmanager.fragments.schedule.ScheduleFragment;
 import com.zucc.ygg31501102.personmanager.service.ScheduleRemind;
 
@@ -162,7 +163,7 @@ public class MainActivity extends AppCompatActivity
                                 startActivity(intent);
                                 break;
                             case 1:
-                                currentNavItem = 1;
+                                currentNavItem = 2;
                                 intent = new Intent(MainActivity.this, AddScheduleActivity.class);
                                 startActivity(intent);
                                 break;
@@ -213,8 +214,8 @@ public class MainActivity extends AppCompatActivity
         MainAdapter adapter = new MainAdapter(getSupportFragmentManager());
 
         adapter.addFragment(new IncomeExpenditureFragment());
+        adapter.addFragment(new InvestFragment());
         adapter.addFragment(new ScheduleFragment());
-        adapter.addFragment(BaseFragment.newInstance("发现"));
         adapter.addFragment(BaseFragment.newInstance("更多"));
         viewPager.setAdapter(adapter);
     }

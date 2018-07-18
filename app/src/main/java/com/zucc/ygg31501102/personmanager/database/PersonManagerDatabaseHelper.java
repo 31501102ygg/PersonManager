@@ -8,6 +8,7 @@ import android.widget.Toast;
 public class PersonManagerDatabaseHelper extends SQLiteOpenHelper {
     public static final String CREATE_EXPEND = "create table expends ("
             +"expendid integer primary key autoincrement,"//收入支出记录id
+            +"userid text,"//用户id
             +"number real,"//金额
             +"expendtype text,"//种类
             +"expendname text,"//名称
@@ -27,6 +28,13 @@ public class PersonManagerDatabaseHelper extends SQLiteOpenHelper {
             +"scheduleaddress text,"//地址
             +"state int)";//状态
 
+    public static final String CREATE_INVEST= "create table invests ("
+            +"investid integer primary key autoincrement,"//买卖外汇id
+            +"userid text,"//用户id
+            +"startdate integer,"//交易时间
+            +"typename text,"//外汇种类
+            +"tradetype integer,"//交易种类（0：买，卖：1）
+            +"number real)";//交易数目
     private Context mContext;
 
     public PersonManagerDatabaseHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version){
@@ -38,13 +46,11 @@ public class PersonManagerDatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_EXPEND);
         db.execSQL(CREATE_SCHEDULE);
+        db.execSQL(CREATE_INVEST);
         Toast.makeText(mContext,"Create succeeded",Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int i, int i1) {
-        db.execSQL("drop table if exists expends");
-        db.execSQL("drop table if exists schedule");
-        onCreate(db);
     }
 }

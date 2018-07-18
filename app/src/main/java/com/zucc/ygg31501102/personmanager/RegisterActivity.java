@@ -86,10 +86,12 @@ public class RegisterActivity extends AppCompatActivity {
                 if(e==null){
                     if (object.size()==0){
                         User newUser = new User();
-                        newUser.setEmail("");
-                        newUser.setName(username);
-                        newUser.setId(userid);
+                        newUser.setUseremail("");
+                        newUser.setPhonenumber("");
+                        newUser.setUsername(username);
+                        newUser.setUserid(userid);
                         newUser.setPassword(password);
+                        newUser.setBalance(0);
                         newUser.save(new SaveListener<String>() {
                             @Override
                             public void done(String objectId,BmobException e) {

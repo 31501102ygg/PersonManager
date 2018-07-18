@@ -11,6 +11,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,10 +19,16 @@ import android.widget.Toast;
 
 import com.zucc.ygg31501102.personmanager.R;
 import com.zucc.ygg31501102.personmanager.modal.Expend;
+import com.zucc.ygg31501102.personmanager.modal.User;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.UpdateListener;
+
+import static com.zucc.ygg31501102.personmanager.fragments.incomeexpend.IncomeExpenditureFragment.decimalFormat;
 
 public class IncomeRecyclerViewFragment extends Fragment {
     private RecyclerView mRecyclerView;
@@ -66,6 +73,7 @@ public class IncomeRecyclerViewFragment extends Fragment {
                 dialog.setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+                        updateBalance(lists.get(position).getNumber());
                         String id= ""+mAdapter.removeData(position);
                         ExpendRemoveFromDatebase(id);
                         setBalance();
@@ -86,7 +94,7 @@ public class IncomeRecyclerViewFragment extends Fragment {
         SQLiteDatabase db = com.zucc.ygg31501102.personmanager.MainActivity.databaseHelper.getReadableDatabase();
         lists.clear();
         String [] columns = {"expendid","number","expendtype","expendname","expendremark","expendcreatedate"};
-        Cursor cursor = db.query("expends",columns,"number < 0",null,null,null,null);
+        Cursor cursor = db.query("expends",columns,"number >= 0",null,null,null,null);
         if (cursor.moveToFirst()) {
             do {
                 Expend expend = new Expend();
@@ -96,7 +104,7 @@ public class IncomeRecyclerViewFragment extends Fragment {
                 expend.setExpendremark(cursor.getString(cursor.getColumnIndex("expendremark")));
                 expend.setExpendtype(cursor.getString(cursor.getColumnIndex("expendtype")));
                 long date = cursor.getLong(cursor.getColumnIndex("expendcreatedate"));
-                expend.setExpendcreatedate(longToDate(date));
+                expend.setExpendcreatedate(date);
                 lists.add(expend);
             } while (cursor.moveToNext());
         }
@@ -122,22 +130,24 @@ public class IncomeRecyclerViewFragment extends Fragment {
     }
 
     public void setBalance(){
-        IncomeExpenditureFragment.mBalance.setText(""+getDateBaseBalance());
+        IncomeExpenditureFragment.mBalance.setText(IncomeExpenditureFragment.decimalFormat.format(User.currentUser.getBalance()));
     }
 
-    public float getDateBaseBalance(){
-        float balance = 0;
-        SQLiteDatabase db = com.zucc.ygg31501102.personmanager.MainActivity.databaseHelper.getReadableDatabase();
-        String [] columns = {"number"};
-        Cursor cursor = db.query("expends",columns,null,null,null,null,null);
-        if (cursor.moveToFirst()) {
-            do {
-                float number = cursor.getFloat(cursor.getColumnIndex("number"));
-                balance += number;
-            } while (cursor.moveToNext());
-        }
-        cursor.close();
-        return balance;
-
+    public void updateBalance(float Money){
+        float balance = User.currentUser.getBalance();
+        balance = balance - Money;
+        User.currentUser.setBalance(balance);
+        User user = new User();
+        user.setValue("balance",balance);
+        user.update(User.currentUser.getObjectId(), new UpdateListener() {
+            @Override
+            public void done(BmobException e) {
+                if(e==null){
+                    Log.i("bmob","更新成功");
+                }else{
+                    Log.i("bmob","更新失败："+e.getMessage()+","+e.getErrorCode());
+                }
+            }
+        });
     }
 }

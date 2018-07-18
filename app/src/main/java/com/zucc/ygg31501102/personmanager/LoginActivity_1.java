@@ -110,29 +110,35 @@ public class LoginActivity_1 extends AppCompatActivity{
                         return;
                     }
                     progressDialog.dismiss();
-                    User user = object.get(0);
-                    SharedPreferences.Editor editor = getSharedPreferences("data",MODE_PRIVATE).edit();
-                    editor.putString("userid",user.getId());
-                    editor.putString("useremail",user.getEmail());
-                    editor.putString("password",user.getPassword());
-                    editor.putString("username",user.getName());
-                    editor.apply();
-                    SharedPreferences pref = getSharedPreferences("data",MODE_PRIVATE);
-                    String name2 = pref.getString("username","");
-                    String id2 = pref.getString("userid","");
-                    String email2 = pref.getString("useremail","");
-                    String password2 = pref.getString("password","");
-                    if (!password.equals(password2)){
-                        Toast.makeText(LoginActivity_1.this, "密码错误", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-                    if(User.currentUser == null){
-                        User.currentUser = new User();
-                        User.currentUser.setName(name2);
-                        User.currentUser.setId(id2);
-                        User.currentUser.setEmail(email2);
-                        User.currentUser.setPassword(password2);
-                    }
+                    User.currentUser = object.get(0);
+//                    SharedPreferences.Editor editor = getSharedPreferences("data",MODE_PRIVATE).edit();
+//                    editor.putString("userid",user.getUserid());
+//                    editor.putString("useremail",user.getUseremail());
+//                    editor.putString("password",user.getPassword());
+//                    editor.putString("phonenumber",user.getPhonenumber());
+//                    editor.putFloat("balance",user.getBalance());
+//                    editor.putString("username",user.getUsername());
+//                    editor.apply();
+//                    SharedPreferences pref = getSharedPreferences("data",MODE_PRIVATE);
+//                    String name2 = pref.getString("username","");
+//                    String id2 = pref.getString("userid","");
+//                    String email2 = pref.getString("useremail","");
+//                    String password2 = pref.getString("password","");
+//                    String phone2 = pref.getString("phonenumber","");
+//                    float balance2 = pref.getFloat("balance",0);
+//                    if (!password.equals(password2)){
+//                        Toast.makeText(LoginActivity_1.this, "密码错误", Toast.LENGTH_SHORT).show();
+//                        return;
+//                    }
+//                    if(User.currentUser == null){
+//                        User.currentUser = new User();
+//                        User.currentUser.setUsername(name2);
+//                        User.currentUser.setUserid(id2);
+//                        User.currentUser.setUseremail(email2);
+//                        User.currentUser.setPassword(password2);
+//                        User.currentUser.setBalance(balance2);
+//                        User.currentUser.setPhonenumber(phone2);
+//                    }
                     Intent intent = new Intent(LoginActivity_1.this, MainActivity.class);
                     startActivity(intent);
                     finish();

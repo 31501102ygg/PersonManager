@@ -97,7 +97,7 @@ public class ScheduleRemind extends Service {
         public void looperEndSchedule(){
             Schedule schedule = null;
             String [] columns = {"scheduleid","userid","startdate","enddate","scheduletitle","scheduleremark","days","picaddress","scheduleaddress","state"};
-            Cursor cursor = database.query("schedules",columns,"userid=? and state>0",new String[]{User.currentUser.getId()},null,null,null);
+            Cursor cursor = database.query("schedules",columns,"userid=? and state>0",new String[]{User.currentUser.getUserid()},null,null,null);
             if (cursor.moveToFirst()) {
                 do {
                     long now = new Date().getTime();
@@ -142,7 +142,7 @@ public class ScheduleRemind extends Service {
         private Schedule SearchLastedSchedule(){
             Schedule schedule = null;
             String [] columns = {"scheduleid","userid","startdate","enddate","scheduletitle","scheduleremark","days","picaddress","scheduleaddress","state"};
-            Cursor cursor = database.query("schedules",columns,"userid=? and state=0",new String[]{User.currentUser.getId()},null,null,"startdate ASC","0,1");
+            Cursor cursor = database.query("schedules",columns,"userid=? and state=0",new String[]{User.currentUser.getUserid()},null,null,"startdate ASC","0,1");
             if (cursor.moveToFirst()) {
                 do {
                     schedule = new Schedule();
@@ -169,41 +169,12 @@ public class ScheduleRemind extends Service {
             database.update("schedules",values,"scheduleid = ?",new String[]{""+schedule.getScheduleid()});
         }
 
-        private void notifySchedule(Schedule latelySchedule){
-            NotificationCompat.Builder nb = new NotificationCompat.Builder(context,"dafault");
-//            Uri photoUri = Uri.fromFile(new File("/storage/emulated/0/DCIM/Alipay/1490526003679.jpeg"));
-//            try {
-//                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), photoUri);
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-            nb.setLargeIcon(BitmapFactory.decodeResource(getApplicationContext().getResources(), R.drawable.header));
-            nb.setSmallIcon(R.drawable.ic_notifications_black_24dp);
-            nb.setContentTitle(latelySchedule.getTitle());
-            nb.setContentText(latelySchedule.getRemark());
-
-            nb.setAutoCancel(true);
-            nb.setOnlyAlertOnce(true);
-            nb.setDefaults(Notification.DEFAULT_VIBRATE);
-
-            //设置事件 PengdingIntent
-            Intent flag= new Intent(getApplicationContext(),MainActivity.class);
-            //对于没有使用startAcitivty时，没有栈，必须设计一个glag否则无法跳转。
-            flag.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            //给bulider加入intent
-            PendingIntent pendingIntent= PendingIntent.getActivity(context,8,flag,PendingIntent.FLAG_CANCEL_CURRENT);
-            nb.setContentIntent(pendingIntent);
-            NotificationManager notificationManager=(NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
-            notificationManager.notify(33,nb.build());
-        }
-
-
     }
 
     private void upDate(){
         Schedule schedule = null;
         String [] columns = {"scheduleid","userid","startdate","enddate","scheduletitle","scheduleremark","days","picaddress","scheduleaddress","state"};
-        Cursor cursor = database.query("schedules",columns,"userid=? and state>0",new String[]{User.currentUser.getId()},null,null,"startdate ASC");
+        Cursor cursor = database.query("schedules",columns,"userid=? and state>=0",new String[]{User.currentUser.getUserid()},null,null,"startdate ASC");
         if (cursor.moveToFirst()) {
             do {
                 long now = new Date().getTime();
@@ -222,8 +193,10 @@ public class ScheduleRemind extends Service {
                     schedule.setImage(cursor.getString(cursor.getColumnIndex("picaddress")));
                     int days = cursor.getInt(cursor.getColumnIndex("days"));
                     schedule.setUserid(cursor.getString(cursor.getColumnIndex("userid")));
-
                     schedule.setDays(days);
+                    if (state == 0){
+                        notifySchedule(schedule);
+                    }
                     updateScheduleOfState(schedule);
                 }
             } while (cursor.moveToNext());
@@ -237,7 +210,7 @@ public class ScheduleRemind extends Service {
             int addDays = schedule.getDays();
             d1 += addDays * 24 * 60 * 60 * 1000;
             values.put("startdate", d1);
-            Date endDate = schedule.getStartDate();
+            Date endDate = schedule.getEndDate();
             addDays = schedule.getDays();
             long d2 = endDate.getTime();
             d2 += addDays * 24 * 60 * 60 * 1000;
@@ -247,6 +220,33 @@ public class ScheduleRemind extends Service {
             values.put("state",-1);
         }
         database.update("schedules",values,"scheduleid=?",new String[]{""+schedule.getScheduleid()});
+    }
+    private void notifySchedule(Schedule latelySchedule){
+        NotificationCompat.Builder nb = new NotificationCompat.Builder(context,"dafault");
+//            Uri photoUri = Uri.fromFile(new File("/storage/emulated/0/DCIM/Alipay/1490526003679.jpeg"));
+//            try {
+//                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), photoUri);
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+        nb.setLargeIcon(BitmapFactory.decodeResource(getApplicationContext().getResources(), R.drawable.header));
+        nb.setSmallIcon(R.drawable.ic_notifications_black_24dp);
+        nb.setContentTitle(latelySchedule.getTitle());
+        nb.setContentText(latelySchedule.getRemark());
+
+        nb.setAutoCancel(true);
+        nb.setOnlyAlertOnce(true);
+        nb.setDefaults(Notification.DEFAULT_VIBRATE);
+
+        //设置事件 PengdingIntent
+        Intent flag= new Intent(getApplicationContext(),MainActivity.class);
+        //对于没有使用startAcitivty时，没有栈，必须设计一个glag否则无法跳转。
+        flag.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        //给bulider加入intent
+        PendingIntent pendingIntent= PendingIntent.getActivity(context,8,flag,PendingIntent.FLAG_CANCEL_CURRENT);
+        nb.setContentIntent(pendingIntent);
+        NotificationManager notificationManager=(NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.notify(33,nb.build());
     }
 
     public Date longToDate(long intDate){

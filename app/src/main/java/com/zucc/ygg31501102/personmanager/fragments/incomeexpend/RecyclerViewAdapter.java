@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.zucc.ygg31501102.personmanager.R;
 import com.zucc.ygg31501102.personmanager.modal.Expend;
@@ -51,7 +52,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         @Override
         public void onBindViewHolder(MyViewHolder holder, final int position)
         {
-            String date = getStringDate(expendsList.get(position).getExpendcreatedate());
+            String date = getStringDate(longToDate(expendsList.get(position).getExpendcreatedate()));
             holder.money.setText(""+expendsList.get(position).getNumber());
             holder.item_date.setText(date);
             holder.item_title.setText(expendsList.get(position).getExpendname());
@@ -127,5 +128,17 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             for (int i=0;i<types.length;i++){
                 map.put(types[i],Icons[i]);
             }
+        }
+
+        public Date longToDate(long intDate){
+            Date date;
+            try {
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                String nowTimeStr = sdf.format(intDate);
+                date = sdf.parse(nowTimeStr);
+            }catch (Exception e){
+                return null;
+            }
+            return date;
         }
     }
