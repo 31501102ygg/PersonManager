@@ -155,7 +155,7 @@ public class AddScheduleActivity extends AppCompatActivity {
             }
         });
 
-        photo.setImageURI(photoUri);
+//        photo.setImageURI(photoUri);
 
         scheduleSpinner = (Spinner)findViewById(R.id.add_schedule_spinner);
         //数据

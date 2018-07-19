@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#30aaaaaa">
+
+        <ImageView
+            android:id="@+id/person_homepage_header"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_margin="5dp"
+            android:src="@drawable/header" />
+
+        <TextView
+            android:id="@+id/person_info_name"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_alignTop="@+id/person_homepage_header"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/person_homepage_header"
+            android:gravity="center_vertical"
+            android:text="乌龟滑翔"
+            android:textColor="@color/black"
+            android:textSize="24sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_alignBottom="@+id/person_homepage_header"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/person_homepage_header"
+            android:gravity="center_vertical"
+            android:text="离离原上草，一岁一枯荣。"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/person_info_rv_phone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#30aaaaaa"
+        android:layout_marginTop="20dp">
+
+        <ImageView
+            android:id="@+id/person_homepage_icon1"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="20dp"
+            android:src="@drawable/icons8_phone_96" />
+
+        <TextView
+            android:id="@+id/person_info_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_alignTop="@+id/person_homepage_icon1"
+            android:layout_marginLeft="50dp"
+            android:layout_toRightOf="@+id/person_homepage_icon1"
+            android:gravity="center_vertical"
+            android:text="15858263563"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/person_info_rv_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#30aaaaaa"
+        android:layout_marginTop="20dp">
+
+        <ImageView
+            android:id="@+id/person_homepage_icon2"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="20dp"
+            android:src="@drawable/icons8_email_96" />
+
+        <TextView
+            android:id="@+id/person_info_email"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_alignTop="@+id/person_homepage_icon2"
+            android:layout_marginLeft="50dp"
+            android:layout_toRightOf="@+id/person_homepage_icon2"
+            android:gravity="center_vertical"
+            android:text="409803540@qq.com"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/person_homepage_share"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="20dp"
+        android:background="@android:color/holo_blue_dark"
+        android:text="分享"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"/>
+
+    <Button
+        android:id="@+id/person_homepage_out"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="20dp"
+        android:background="@android:color/holo_blue_dark"
+        android:text="退出登录"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"/>
+</LinearLayout>

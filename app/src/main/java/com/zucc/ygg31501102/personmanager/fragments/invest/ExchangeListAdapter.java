@@ -12,6 +12,8 @@ import com.zucc.ygg31501102.personmanager.R;
 import com.zucc.ygg31501102.personmanager.fragments.incomeexpend.RecyclerViewAdapter;
 import com.zucc.ygg31501102.personmanager.modal.Exchange;
 
+import org.w3c.dom.Text;
+
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +39,7 @@ public class ExchangeListAdapter extends RecyclerView.Adapter<ExchangeListAdapte
     public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, final int position) {
         myViewHolder.invest.setText(decimalFormat.format(exchanges.get(position).getBankConversionPri()));
         myViewHolder.money.setText(exchanges.get(position).getName());
+        myViewHolder.flagimg.setImageResource(InvestFragment.FlagsMap.get(exchanges.get(position).getName()));
         if( OnItemClickListener!= null){
             myViewHolder.itemView.setOnClickListener( new View.OnClickListener() {
                 @Override
@@ -65,11 +68,13 @@ public class ExchangeListAdapter extends RecyclerView.Adapter<ExchangeListAdapte
 
         TextView money;
         TextView invest;
+        ImageView flagimg;
         public MyViewHolder(View view)
         {
             super(view);
             money = (TextView) view.findViewById(R.id.invest_item_title);
             invest = (TextView) view.findViewById(R.id.invest_item_money);
+            flagimg = (ImageView) view.findViewById(R.id.invest_item_img);
         }
     }
     public interface OnItemClickListener{

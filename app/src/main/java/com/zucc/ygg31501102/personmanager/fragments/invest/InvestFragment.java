@@ -22,6 +22,8 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class InvestFragment extends Fragment {
     private TextView balance;
@@ -30,10 +32,17 @@ public class InvestFragment extends Fragment {
     private String[] mTitle = {"你的外汇","汇率"};
     private ArrayList<Fragment> fragments = new ArrayList<Fragment>();
     private DecimalFormat decimalFormat =new DecimalFormat("0.00");
+    public static Map<String,Integer> FlagsMap = new HashMap<String ,Integer>();
+    private String[] countrys={"美元","欧元","港币","日元","英镑","澳大利亚元","加拿大元","泰国铢","新加坡元","挪威克朗","新西兰元","丹麦克朗","瑞典克朗","菲律宾比索","卢布","瑞士法郎","新台币","澳门元","林吉特","南非兰特","韩国元"};
+    private int[] flags={R.drawable.flag_usa_96,R.drawable.flag_europe_96,R.drawable.flag_hongkong_96,R.drawable.flag_japan_96,R.drawable.flag_britain_96,
+            R.drawable.flag_australia_96,R.drawable.flag_canada_96,R.drawable.flag_thailand_96,R.drawable.flag_singapore_96,R.drawable.flag_norway_96,
+            R.drawable.flag_new_zealand_96,R.drawable.flag_denmark_96,R.drawable.flag_sweden_96,R.drawable.flag_philippines_96,R.drawable.flag_russian_federation_96,
+            R.drawable.flag_switzerland_96,R.drawable.flag_taiwan_96,R.drawable.flag_macao,R.drawable.flag_malaysia_96,R.drawable.flag_south_africa_96,R.drawable.flag_south_korea_96};
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_invest, null);
+        initMap();
         initDate();
         balance = (TextView)view.findViewById(R.id.invest_balance);
         balance.setText(decimalFormat.format(User.currentUser.getBalance()));
@@ -93,8 +102,8 @@ public class InvestFragment extends Fragment {
         else{
             fragments.clear();
             fragments.add(new YourExchangeListFragment());
-            fragments.add(new YourExchangeListFragment());
-//            fragments.add(new ExchangeListFragment());
+//            fragments.add(new YourExchangeListFragment());
+            fragments.add(new ExchangeListFragment());
         }
     }
     public Date longToDate(long intDate){
@@ -108,5 +117,11 @@ public class InvestFragment extends Fragment {
             return null;
         }
         return date;
+    }
+
+    public void initMap(){
+        for (int i=0;i<countrys.length;i++){
+            FlagsMap.put(countrys[i],flags[i]);
+        }
     }
 }

@@ -51,7 +51,7 @@
         <activity
             android:name=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar"
-            android:label="@string/title_activity_login" />
+            android:label="个人助理" />
         <activity
             android:name=".RegisterActivity"
             android:label="@string/register"
@@ -76,6 +76,9 @@
         <activity android:name=".SaleExchangeActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:label="卖出外汇"/>
+        <activity android:name=".ModifyInfoActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:label="修改信息"/>
         <service android:name=".service.ScheduleRemind"></service>
         <service android:name="com.amap.api.location.APSService"></service>
         <meta-data android:name="com.amap.api.v2.apikey" android:value="42bc7bf109a289ec5eeb09a191d19ae6"></meta-data>

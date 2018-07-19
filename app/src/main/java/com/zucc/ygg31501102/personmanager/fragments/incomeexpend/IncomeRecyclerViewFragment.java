@@ -94,7 +94,7 @@ public class IncomeRecyclerViewFragment extends Fragment {
         SQLiteDatabase db = com.zucc.ygg31501102.personmanager.MainActivity.databaseHelper.getReadableDatabase();
         lists.clear();
         String [] columns = {"expendid","number","expendtype","expendname","expendremark","expendcreatedate"};
-        Cursor cursor = db.query("expends",columns,"number >= 0",null,null,null,null);
+        Cursor cursor = db.query("expends",columns,"userid=? and number >= 0",new String[]{User.currentUser.getUserid()},null,null,null);
         if (cursor.moveToFirst()) {
             do {
                 Expend expend = new Expend();

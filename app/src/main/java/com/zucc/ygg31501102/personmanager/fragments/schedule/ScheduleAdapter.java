@@ -27,7 +27,7 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.Schedu
     private List<Schedule> schedulesList;
     private View view;
     private RecyclerViewAdapter.OnItemClickListener OnItemClickListener = null;
-    private Uri photoUri = Uri.fromFile(new File("/storage/emulated/0/DCIM/Alipay/1490526003679.jpeg"));
+//    private Uri photoUri = Uri.fromFile(new File("/storage/emulated/0/DCIM/Alipay/1490526003679.jpeg"));
 
     public ScheduleAdapter(List<Schedule> schedulesList) {
         this.schedulesList = schedulesList;
@@ -56,7 +56,7 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.Schedu
             Uri uri = Uri.fromFile(new File(schedulesList.get(position).getImage()));
             holder.schedule_item_img.setImageURI(uri);
         }catch(Exception e){
-            holder.schedule_item_img.setImageURI(photoUri);
+//            holder.schedule_item_img.setImageURI(photoUri);
         }
 
         if( OnItemClickListener!= null){

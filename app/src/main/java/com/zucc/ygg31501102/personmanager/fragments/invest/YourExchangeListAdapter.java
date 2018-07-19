@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.zucc.ygg31501102.personmanager.R;
@@ -36,6 +37,7 @@ public class YourExchangeListAdapter extends RecyclerView.Adapter<YourExchangeLi
     public void onBindViewHolder(@NonNull YourExchangeListAdapter.MyViewHolder myViewHolder, final int position) {
         myViewHolder.invest.setText(decimalFormat.format(yourExchangeAccounts.get(position).getNumber()));
         myViewHolder.money.setText(yourExchangeAccounts.get(position).getMoneyTypeName());
+        myViewHolder.flagimage.setImageResource(InvestFragment.FlagsMap.get(yourExchangeAccounts.get(position).getMoneyTypeName()));
         if( OnItemClickListener!= null){
             myViewHolder.itemView.setOnClickListener( new View.OnClickListener() {
                 @Override
@@ -71,11 +73,13 @@ public class YourExchangeListAdapter extends RecyclerView.Adapter<YourExchangeLi
 
         TextView money;
         TextView invest;
+        ImageView flagimage;
         public MyViewHolder(View view)
         {
             super(view);
             money = (TextView) view.findViewById(R.id.invest_item_title);
             invest = (TextView) view.findViewById(R.id.invest_item_money);
+            flagimage = (ImageView) view.findViewById(R.id.invest_item_img);
         }
     }
     public interface OnItemClickListener{

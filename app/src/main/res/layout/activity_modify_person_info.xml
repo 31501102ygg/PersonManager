@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="10dp"
+            android:id="@+id/person_info_modify_back"
+            android:src="@drawable/keyboard_backspace" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_margin="10dp"
+            android:layout_toRightOf="@+id/person_info_modify_back"
+            android:text="修改信息"
+            android:textColor="@android:color/black"
+            android:textSize="24sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/person_info_text1"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_margin="10dp"
+            android:text="用户名称："
+            android:textColor="@android:color/black"
+            android:textSize="24sp" />
+
+        <EditText
+            android:id="@+id/person_info_modify_name"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:hint="XXXX"
+            android:layout_alignTop="@+id/person_info_text1"
+            android:layout_toRightOf="@+id/person_info_text1"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/person_info_text2"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_margin="10dp"
+            android:text="用户手机："
+            android:textColor="@android:color/black"
+            android:textSize="24sp" />
+
+        <EditText
+            android:id="@+id/person_info_modify_phone"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:hint="158XXXX3563"
+            android:layout_alignTop="@+id/person_info_text2"
+            android:layout_toRightOf="@+id/person_info_text2"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/person_info_text3"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_margin="10dp"
+            android:text="用户邮箱："
+            android:textColor="@android:color/black"
+            android:textSize="24sp" />
+
+        <EditText
+            android:id="@+id/person_info_modify_email"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:hint="40XXXX540@qq.com"
+            android:layout_alignTop="@+id/person_info_text3"
+            android:layout_toRightOf="@+id/person_info_text3"/>
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/person_info_modify_confirm"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:background="@android:color/holo_blue_dark"
+        android:text="更新信息"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+</LinearLayout>
