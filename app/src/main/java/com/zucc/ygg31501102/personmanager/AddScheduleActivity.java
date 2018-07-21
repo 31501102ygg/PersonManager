@@ -52,8 +52,6 @@ import static android.media.MediaRecorder.VideoSource.CAMERA;
 
 public class AddScheduleActivity extends AppCompatActivity {
     private static final int WRITE_COARSE_LOCATION_REQUEST_CODE = 100;
-    private static final int CAMERA_REQUEST_CODE = 110;
-    private static final int WRITE_EXTERNAL_STORAGE_REQUEST_CODE = 120;
     private static final int REQUEST_CODE = 100;
     //声明AMapLocationClient类对象
     public AMapLocationClient mLocationClient = null;

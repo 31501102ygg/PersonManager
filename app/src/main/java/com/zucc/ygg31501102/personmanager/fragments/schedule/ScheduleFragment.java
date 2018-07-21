@@ -28,7 +28,7 @@ import java.util.Date;
 public class ScheduleFragment extends Fragment {
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
-    private String[] mTitle = {"代办日程","循环日程"};
+    private String[] mTitle = {"待办日程","循环日程"};
     private ArrayList<Fragment> fragments = new ArrayList<Fragment>();
     public static ArrayList<Schedule> WaitSchedule = new ArrayList<Schedule>();
     public static ArrayList<Schedule> RecyclerSchedule = new ArrayList<Schedule>();

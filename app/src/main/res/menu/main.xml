@@ -7,10 +7,10 @@
         android:title="@string/menu_balance_statistics"
         app:showAsAction="never" />
 
-    <item
-        android:id="@+id/add_schedule"
-        android:orderInCategory="100"
-        android:title="@string/menu_add_schedule"
-        app:showAsAction="never" />
+    <!--<item-->
+        <!--android:id="@+id/add_schedule"-->
+        <!--android:orderInCategory="100"-->
+        <!--android:title="@string/menu_add_schedule"-->
+        <!--app:showAsAction="never" />-->
 
 </menu>

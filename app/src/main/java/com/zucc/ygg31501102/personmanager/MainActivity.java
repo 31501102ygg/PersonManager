@@ -1,16 +1,13 @@
 package com.zucc.ygg31501102.personmanager;
 
-import android.Manifest;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
-import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.nfc.Tag;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -18,14 +15,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.NavigationView;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -38,14 +29,11 @@ import android.widget.PopupWindow;
 import android.widget.Toast;
 
 import com.zucc.ygg31501102.personmanager.database.PersonManagerDatabaseHelper;
-import com.zucc.ygg31501102.personmanager.fragments.BaseFragment;
 import com.zucc.ygg31501102.personmanager.fragments.incomeexpend.IncomeExpenditureFragment;
 import com.zucc.ygg31501102.personmanager.fragments.invest.InvestFragment;
 import com.zucc.ygg31501102.personmanager.fragments.personpage.PersonHomepage;
 import com.zucc.ygg31501102.personmanager.fragments.schedule.ScheduleFragment;
 import com.zucc.ygg31501102.personmanager.service.ScheduleRemind;
-
-import java.io.FileNotFoundException;
 
 import pl.com.salsoft.sqlitestudioremote.SQLiteStudioService;
 
@@ -189,15 +177,6 @@ public class MainActivity extends AppCompatActivity{
             }
         });
 
-//        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-//        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-//                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-//        drawer.addDrawerListener(toggle);
-//        toggle.syncState();
-
-//        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-//        navigationView.setNavigationItemSelectedListener(this);
-
         //开启推送服务
         Intent startIntent = new Intent(this, ScheduleRemind.class);
         bindService(startIntent,connection,BIND_AUTO_CREATE);
@@ -219,15 +198,6 @@ public class MainActivity extends AppCompatActivity{
         adapter.addFragment(new PersonHomepage());
         viewPager.setAdapter(adapter);
     }
-//    @Override
-//    public void onBackPressed() {
-//        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-//        if (drawer.isDrawerOpen(GravityCompat.START)) {
-//            drawer.closeDrawer(GravityCompat.START);
-//        } else {
-//            super.onBackPressed();
-//        }
-//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -252,31 +222,6 @@ public class MainActivity extends AppCompatActivity{
 
         return super.onOptionsItemSelected(item);
     }
-
-//    @SuppressWarnings("StatementWithEmptyBody")
-//    @Override
-//    public boolean onNavigationItemSelected(MenuItem item) {
-//        // Handle navigation view item clicks here.
-//        int id = item.getItemId();
-//
-//        if (id == R.id.nav_camera) {
-//            // Handle the camera action
-//        } else if (id == R.id.nav_gallery) {
-//
-//        } else if (id == R.id.nav_slideshow) {
-//
-//        } else if (id == R.id.nav_manage) {
-//
-//        } else if (id == R.id.nav_share) {
-//
-//        } else if (id == R.id.nav_send) {
-//
-//        }
-//
-//        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-//        drawer.closeDrawer(GravityCompat.START);
-//        return true;
-//    }
 
     @Override
     protected void onPostResume() {

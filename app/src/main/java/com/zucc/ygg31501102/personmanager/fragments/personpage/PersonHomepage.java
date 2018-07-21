@@ -83,8 +83,8 @@ public class PersonHomepage extends Fragment{
             public void onClick(View view) {
                 Intent intent = new Intent(Intent.ACTION_SEND);
                 intent.setType("text/plain");
-                intent.putExtra(Intent.EXTRA_SUBJECT, "标题");
-                intent.putExtra(Intent.EXTRA_TEXT, "描述信息" + "这里你可以追加一个url连接");
+                intent.putExtra(Intent.EXTRA_SUBJECT, "PersonManager");
+                intent.putExtra(Intent.EXTRA_TEXT, "这是一个来自PersonManager的信息：" + "www.baidu.com");
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(Intent.createChooser(intent, "分享到"));
             }

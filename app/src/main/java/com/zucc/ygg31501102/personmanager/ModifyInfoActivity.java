@@ -74,7 +74,6 @@ public class ModifyInfoActivity extends AppCompatActivity {
                 if (e == null) {
                     Log.i("bmob", "更新成功");
                     loadUser();
-                    finish();
                 } else {
                     Toast.makeText(getApplicationContext(), "更新失败", Toast.LENGTH_SHORT).show();
                     Log.i("bmob", "更新失败：" + e.getMessage() + "," + e.getErrorCode());
@@ -91,6 +90,7 @@ public class ModifyInfoActivity extends AppCompatActivity {
                 if(e==null){
                     Log.i("bmob", "更新成功");
                     User.currentUser = object;
+                    finish();
                 }else{
                     Toast.makeText(getApplicationContext(), "更新失败", Toast.LENGTH_SHORT).show();
                     Log.i("bmob", "更新失败：" + e.getMessage() + "," + e.getErrorCode());

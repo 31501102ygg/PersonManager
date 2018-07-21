@@ -97,7 +97,6 @@ public class AddExpendActivity extends AppCompatActivity{
             public void onClick(View view) {
                 payOutButton.setTextColor(getApplicationContext().getResources().getColor(R.color.light_red));
                 incomeButton.setTextColor(getApplicationContext().getResources().getColor(R.color.black));
-                ifIncome = false;
                 initPayoutDate();
             }
         });
@@ -107,7 +106,6 @@ public class AddExpendActivity extends AppCompatActivity{
             public void onClick(View view) {
                 incomeButton.setTextColor(getApplicationContext().getResources().getColor(R.color.light_red));
                 payOutButton.setTextColor(getApplicationContext().getResources().getColor(R.color.black));
-                ifIncome = true;
                 initIncomDate();
             }
         });
@@ -119,9 +117,7 @@ public class AddExpendActivity extends AppCompatActivity{
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (addExpend()){
-                    finish();
-                }
+                addExpend();
             }
         });
     }
@@ -193,23 +189,23 @@ public class AddExpendActivity extends AppCompatActivity{
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 switch (position) {
                     case 0:
-                        selectType = "餐饮食品";selectItem.setText("餐饮食品");break;
+                        selectType = "餐饮食品";selectItem.setText("餐饮食品");ifIncome = false;break;
                     case 1:
-                        selectType = "衣服饰品";selectItem.setText("衣服饰品");break;
+                        selectType = "衣服饰品";selectItem.setText("衣服饰品");ifIncome = false;break;
                     case 2:
-                        selectType = "居家生活";selectItem.setText("居家生活");break;
+                        selectType = "居家生活";selectItem.setText("居家生活");ifIncome = false;break;
                     case 3:
-                        selectType = "行车交通";selectItem.setText("行车交通");break;
+                        selectType = "行车交通";selectItem.setText("行车交通");ifIncome = false;break;
                     case 4:
-                        selectType = "休闲娱乐";selectItem.setText("休闲娱乐");break;
+                        selectType = "休闲娱乐";selectItem.setText("休闲娱乐");ifIncome = false;break;
                     case 5:
-                        selectType = "文化教育";selectItem.setText("文化教育");break;
+                        selectType = "文化教育";selectItem.setText("文化教育");ifIncome = false;break;
                     case 6:
-                        selectType = "健康医疗";selectItem.setText("健康医疗");break;
+                        selectType = "健康医疗";selectItem.setText("健康医疗");ifIncome = false;break;
                     case 7:
-                        selectType = "投资支出";selectItem.setText("投资支出");break;
+                        selectType = "投资支出";selectItem.setText("投资支出");ifIncome = false;break;
                     case 8:
-                        selectType = "其他支出";selectItem.setText("其他支出");break;
+                        selectType = "其他支出";selectItem.setText("其他支出");ifIncome = false;break;
                 }
             }
 
@@ -257,11 +253,11 @@ public class AddExpendActivity extends AppCompatActivity{
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 switch (position) {
                     case 0:
-                        selectType = "工作收入";selectItem.setText("工作收入");break;
+                        selectType = "工作收入";selectItem.setText("工作收入");ifIncome = true;break;
                     case 1:
-                        selectType = "投资收入";selectItem.setText("投资收入");break;
+                        selectType = "投资收入";selectItem.setText("投资收入");ifIncome = true;break;
                     case 2:
-                        selectType = "其他收入";selectItem.setText("其他收入");break;
+                        selectType = "其他收入";selectItem.setText("其他收入");ifIncome = true;break;
 
                 }
             }
@@ -351,12 +347,12 @@ public class AddExpendActivity extends AppCompatActivity{
                         public void done(BmobException e) {
                             if(e==null){
                                 Log.i("bmob","更新成功");
+                                finish();
                             }else{
                                 Log.i("bmob","更新失败："+e.getMessage()+","+e.getErrorCode());
                             }
                         }
                     });
-                    finish();
                 }else{
                     Log.i("bmob_expend","失败");
                 }

@@ -10,6 +10,7 @@ import android.widget.ImageView;
 
 import com.zucc.ygg31501102.personmanager.database.PersonManagerDatabaseHelper;
 import com.zucc.ygg31501102.personmanager.drawview.PieChart;
+import com.zucc.ygg31501102.personmanager.modal.User;
 
 public class BalanceStatisticsActivity extends AppCompatActivity{
     private PieChart pieChart;
@@ -38,10 +39,10 @@ public class BalanceStatisticsActivity extends AppCompatActivity{
     public void TotalMoney(){
         float pay = 0;
         float income = 0;
-        datas = new float[6];
+        datas = new float[2];
         String [] columns = {"number"};
         SQLiteDatabase db = MainActivity.databaseHelper.getReadableDatabase();
-        Cursor cursor = db.query("expends",columns,null,null,null,null,null);
+        Cursor cursor = db.query("expends",columns,"userid=?",new String[]{User.currentUser.getUserid()},null,null,null);
         if(cursor.moveToFirst()) {
             do {
                 float number = cursor.getFloat(cursor.getColumnIndex("number"));
@@ -53,9 +54,5 @@ public class BalanceStatisticsActivity extends AppCompatActivity{
         }
         datas[0] = pay;
         datas[1] = income;
-        datas[2] = 0;
-        datas[3] = 0;
-        datas[4] = 0;
-        datas[5] = 0;
     }
 }

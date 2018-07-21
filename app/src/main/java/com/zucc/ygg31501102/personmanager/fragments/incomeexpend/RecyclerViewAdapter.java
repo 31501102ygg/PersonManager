@@ -44,7 +44,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                     parent.getContext()).inflate(R.layout.item, parent,
                     false));
             initTypesMap();
-//            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.expend_type_item, null);
 
             return holder;
         }

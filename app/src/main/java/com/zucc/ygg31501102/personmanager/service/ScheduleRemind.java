@@ -79,8 +79,8 @@ public class ScheduleRemind extends Service {
                     Schedule schedule = SearchLastedSchedule();
                     if (schedule != null){
                         looperStartSchedule(schedule);
-                        looperEndSchedule();
                     }
+                    looperEndSchedule();
                     Toast.makeText(getApplicationContext(),"定时调用",Toast.LENGTH_SHORT).show();
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -223,12 +223,6 @@ public class ScheduleRemind extends Service {
     }
     private void notifySchedule(Schedule latelySchedule){
         NotificationCompat.Builder nb = new NotificationCompat.Builder(context,"dafault");
-//            Uri photoUri = Uri.fromFile(new File("/storage/emulated/0/DCIM/Alipay/1490526003679.jpeg"));
-//            try {
-//                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), photoUri);
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
         nb.setLargeIcon(BitmapFactory.decodeResource(getApplicationContext().getResources(), R.drawable.header));
         nb.setSmallIcon(R.drawable.ic_notifications_black_24dp);
         nb.setContentTitle(latelySchedule.getTitle());
